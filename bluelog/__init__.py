@@ -37,10 +37,12 @@ def create_app(config_name=None):
 
 
 def register_logging(app):
+    # 注册日志处理器 ch14
     pass
 
 
 def register_extensions(app):
+    # 注册扩展（扩展初始化）
     bootstrap.init_app(app)
     db.init_app(app)
     ckeditor.init_app(app)
@@ -49,22 +51,26 @@ def register_extensions(app):
 
 
 def register_blueprints(app):
+    # 注册蓝本
     app.register_blueprint(blog_bp)
     app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(auth_bp, url_prefix='/auth')
 
 
 def register_shell_context(app):
+    # 注册shell上下文处理函数
     @app.shell_context_processor
     def make_shell_context():
         return dict(db=db)
 
 
 def register_template_context(app):
+    # 注册模板上下文处理函数
     pass
 
 
 def register_errors(app):
+    # 注册错误处理函数
     @app.errorhandler(400)
     def bad_request(e):
         return render_template('errors/400.html'), 400
@@ -79,6 +85,7 @@ def register_errors(app):
 
 
 def register_commands(app):
+    # 注册自定义shell命令
     @app.cli.command()
     @click.option('--drop', is_flag=True, help='Create after drop.')
     def initdb(drop):
